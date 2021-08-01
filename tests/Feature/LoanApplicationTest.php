@@ -25,10 +25,7 @@ class LoanApplicationTest extends TestCase
 
         $response = $this->postJson('api/loans', [
             'amount' => 10000.00,
-            'term' => [
-                'years' => 1,
-                'months' => 0
-            ]
+            'term_in_weeks' => 52
         ]);
 
         $response->assertStatus(201)
@@ -36,10 +33,7 @@ class LoanApplicationTest extends TestCase
                 'data' => [
                     'id' => 1,
                     'amount' => "10,000.00",
-                    'term' => [
-                        'years' => 1,
-                        'months' => 0,
-                    ],
+                    'term_in_weeks' => 52,
                     'status' => 'pending',
                     'interest_rate' => null,
                     'reason_for_rejection' => null,
@@ -49,7 +43,7 @@ class LoanApplicationTest extends TestCase
         $this->assertDatabaseHas('loans', [
             'user_id' => $user->id,
             'amount' => 1000000,
-            'loan_term_in_months' => 12,
+            'loan_term_in_weeks' => 52,
             'status' => 'pending'
         ]);
     }
@@ -98,18 +92,18 @@ class LoanApplicationTest extends TestCase
 
         $response = $this->postJson('api/loans', [
             'amount' => 10000.00,
-            'term' => $invalidTerm
+            'term_in_weeks' => $invalidTerm
         ]);
 
         $response->assertStatus(422)
-            ->assertJsonValidationErrors('term');
+            ->assertJsonValidationErrors('term_in_weeks');
     }
 
     public function requiredFields()
     {
         return [
             ['amount'],
-            ['term'],
+            ['term_in_weeks'],
         ];
     }
 
@@ -129,12 +123,10 @@ class LoanApplicationTest extends TestCase
         return [
             [''],
             ['abc'],
-            [['years' => '', 'months' => '']],
-            [['years' => 'xy', 'months' => 'xy']],
-            [['years' => 0, 'months' => 0]],
-            [['years' => -10, 'months' => 0]],
-            [['years' => 1, 'months' => -10]],
-            [['years' => 1, 'months' => 14]],
+            [1],
+            [3],
+            [-2],
+            [0],
         ];
     }
 }

@@ -26,35 +26,7 @@ class LoanApplicationRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric|gt:100',
-            'term' => [
-                'required',
-                'array',
-                function ($attribute, $value, $fail) {
-                    $term = collect($value);
-                    $years = $term->get('years');
-                    $months = $term->get('months');
-
-                    if (($years != 0 && empty($years)) || ($months != 0 && empty($months))) {
-                        $fail('The term is invalid.');
-                    }
-
-                    if (!is_numeric($years) || !is_numeric($months)) {
-                        $fail('The term is invalid.');
-                    }
-
-                    if ($months == 0 && $years == 0) {
-                        $fail('The term is invalid.');
-                    }
-
-                    if ($months < 0 || $years < 0) {
-                        $fail('The term is invalid.');
-                    }
-
-                    if ($months > 12) {
-                        $fail('The term is invalid.');
-                    }
-                },
-            ],
+            'term_in_weeks' => ['required', 'numeric', 'min:4'],
         ];
     }
 }

@@ -57,7 +57,7 @@ class LoanApprovalTest extends TestCase
             'data' => [
                 'id' => $loan->id,
                 'amount' => $loan->formatted_amount,
-                'term' => $loan->formatted_term,
+                'term_in_weeks' => $loan->loan_term_in_weeks,
                 'status' => 'approved',
                 'interest_rate' => 13.00,
                 'reason_for_rejection' => null,
@@ -123,7 +123,7 @@ class LoanApprovalTest extends TestCase
             'data' => [
                 'id' => $loan->id,
                 'amount' => $loan->formatted_amount,
-                'term' => $loan->formatted_term,
+                'term_in_weeks' => $loan->loan_term_in_weeks,
                 'status' => 'rejected',
                 'interest_rate' => null,
                 'reason_for_rejection' => 'Credit score not good enough.'

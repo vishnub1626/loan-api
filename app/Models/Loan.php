@@ -16,14 +16,6 @@ class Loan extends Model
         return number_format($this->amount / 100, 2);
     }
 
-    public function getFormattedTermAttribute()
-    {
-        return [
-            'years' => floor($this->loan_term_in_months / 12),
-            'months' => $this->loan_term_in_months % 12,
-        ];
-    }
-
     public function approve(User $user)
     {
         $this->status = 'approved';

@@ -24,7 +24,7 @@ class LoanFactory extends Factory
     {
         return [
             'amount' => 10000,
-            'loan_term_in_months' => 12, 
+            'loan_term_in_weeks' => 12, 
             'status' => 'pending'
         ];
     }

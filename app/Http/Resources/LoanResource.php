@@ -17,7 +17,7 @@ class LoanResource extends JsonResource
         return [
             'id' => $this->id,
             'amount' => $this->formatted_amount,
-            'term' => $this->formatted_term,
+            'term_in_weeks' => (int) $this->loan_term_in_weeks,
             'status' => $this->status,
             'interest_rate' => $this->interest_rate,
             'reason_for_rejection' => $this->reason_for_rejection,

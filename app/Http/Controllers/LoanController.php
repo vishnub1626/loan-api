@@ -13,7 +13,7 @@ class LoanController extends Controller
         $loan = Loan::create([
             'user_id' => $request->user()->id,
             'amount' => $request->amount * 100,
-            'loan_term_in_months' => $request->term['years'] * 12 + $request->term['months'],
+            'loan_term_in_weeks' => $request->term_in_weeks,
             'status' => 'pending'
         ]);
 

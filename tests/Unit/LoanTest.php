@@ -19,37 +19,6 @@ class LoanTest extends TestCase
     }
 
     /** @test */
-    public function can_return_formatted_loan_term()
-    {
-        $loan = Loan::factory()->make([
-            'loan_term_in_months' => 38
-        ]);
-
-        $this->assertEquals([
-            'years' => 3,
-            'months' => 2,
-        ], $loan->formatted_term);
-
-        $loan = Loan::factory()->make([
-            'loan_term_in_months' => 24
-        ]);
-
-        $this->assertEquals([
-            'years' => 2,
-            'months' => 0,
-        ], $loan->formatted_term);
-
-        $loan = Loan::factory()->make([
-            'loan_term_in_months' => 4
-        ]);
-
-        $this->assertEquals([
-            'years' => 0,
-            'months' => 4,
-        ], $loan->formatted_term);
-    }
-
-    /** @test */
     public function can_mark_loan_as_approved()
     {
         $admin = User::factory()->make([
