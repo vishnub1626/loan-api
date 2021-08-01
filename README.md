@@ -16,7 +16,7 @@ This should setup and start a server at http://localhost:8080. The MySQL server 
 ### Admin user
 The scaffolding creates and admin user with the credentials:  
 ```
-email: admin@loan-api.com  
+email: admin@loan.com  
 password: password
 ```
 
