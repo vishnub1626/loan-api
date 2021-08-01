@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\LoanApproved;
 use App\Events\LoanRejected;
 use App\Http\Resources\LoanResource;
+use App\Jobs\ProcessLoanApplication;
 use App\Models\Loan;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,7 @@ class LoanApprovalController extends Controller
         $loan->save();
 
         LoanApproved::dispatch($loan);
+        ProcessLoanApplication::dispatch($loan);
 
         return new LoanResource($loan);
     }

@@ -18,9 +18,11 @@ class CreateLoansTable extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->unsignedBigInteger('amount');
-            $table->unsignedMediumInteger('loan_term_in_weeks');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->unsignedMediumInteger('loan_term_in_weeks');
             $table->float('interest_rate', 4, 2)->nullable();
+            $table->unsignedBigInteger('weekly_installment_amount')->nullable();
+            $table->unsignedMediumInteger('installments_remaining')->nullable();
             $table->unsignedBigInteger('approved_by')->nullable();
             $table->unsignedBigInteger('rejected_by')->nullable();
             $table->text('reason_for_rejection')->nullable();

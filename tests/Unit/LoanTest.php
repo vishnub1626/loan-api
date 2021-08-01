@@ -54,4 +54,14 @@ class LoanTest extends TestCase
         $this->assertEquals($admin->id, $loan->rejected_by);
         $this->assertEquals('Credit score not good enough.', $loan->reason_for_rejection);
     }
+
+    /** @test */
+    public function can_return_formatted_weekly_installment()
+    {
+        $loan = Loan::factory()->make([
+            'weekly_installment_amount' => 10000
+        ]);
+
+        $this->assertEquals('100.00', $loan->formatted_weekly_installment);
+    }
 }

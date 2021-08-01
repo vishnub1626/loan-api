@@ -16,6 +16,11 @@ class Loan extends Model
         return number_format($this->amount / 100, 2);
     }
 
+    public function getFormattedWeeklyInstallmentAttribute()
+    {
+        return number_format($this->weekly_installment_amount / 100, 2);
+    }
+
     public function approve(User $user)
     {
         $this->status = 'approved';

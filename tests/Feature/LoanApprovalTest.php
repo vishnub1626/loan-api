@@ -6,8 +6,10 @@ use Tests\TestCase;
 use App\Events\LoanApproved;
 use App\Events\LoanRejected;
 use Tests\Helpers\CreatesLoans;
+use App\Jobs\ProcessLoanApplication;
 use Tests\Helpers\AuthenticatesUser;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoanApprovalTest extends TestCase
@@ -44,6 +46,7 @@ class LoanApprovalTest extends TestCase
     public function admin_can_approve_loan_application()
     {
         Event::fake();
+        Queue::fake();
 
         $loan = $this->createLoan();
 
@@ -72,6 +75,10 @@ class LoanApprovalTest extends TestCase
 
         Event::assertDispatched(function (LoanApproved $event) use ($loan) {
             return $event->loan->id === $loan->id;
+        });
+
+        Queue::assertPushed(function (ProcessLoanApplication $job) use ($loan) {
+            return $job->loan->id === $loan->id;
         });
     }
 
