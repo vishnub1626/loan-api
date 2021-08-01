@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Loan;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LoanFactory extends Factory
@@ -23,7 +24,8 @@ class LoanFactory extends Factory
     {
         return [
             'amount' => 10000,
-            'loan_term_in_months' => 12
+            'loan_term_in_months' => 12, 
+            'status' => 'pending'
         ];
     }
 }

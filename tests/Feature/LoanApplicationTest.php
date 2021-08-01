@@ -40,7 +40,9 @@ class LoanApplicationTest extends TestCase
                         'years' => 1,
                         'months' => 0,
                     ],
-                    'status' => 'pending'
+                    'status' => 'pending',
+                    'interest_rate' => null,
+                    'reason_for_rejection' => null,
                 ]
             ]);
 
@@ -96,7 +98,7 @@ class LoanApplicationTest extends TestCase
 
         $response = $this->postJson('api/loans', [
             'amount' => 10000.00,
-            'term' => $invalidTerm 
+            'term' => $invalidTerm
         ]);
 
         $response->assertStatus(422)

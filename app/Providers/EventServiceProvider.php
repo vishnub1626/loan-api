@@ -2,10 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Events\LoanApproved;
+use App\Events\LoanRejected;
+use App\Listeners\SendLoanApprovedNotification;
+use App\Listeners\SendLoanRejectedNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -15,8 +16,12 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        LoanApproved::class => [
+            SendLoanApprovedNotification::class,
+        ],
+
+        LoanRejected::class => [
+            SendLoanRejectedNotification::class,
         ],
     ];
 

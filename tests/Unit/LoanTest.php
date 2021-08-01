@@ -3,7 +3,8 @@
 namespace Tests\Unit;
 
 use App\Models\Loan;
-use PHPUnit\Framework\TestCase;
+use App\Models\User;
+use Tests\TestCase;
 
 class LoanTest extends TestCase
 {
@@ -46,5 +47,42 @@ class LoanTest extends TestCase
             'years' => 0,
             'months' => 4,
         ], $loan->formatted_term);
+    }
+
+    /** @test */
+    public function can_mark_loan_as_approved()
+    {
+        $admin = User::factory()->make([
+            'is_admin' => true
+        ]); 
+
+        $loan = Loan::factory()->make([
+            'status' => 'pending',
+            'approved_by' => null
+        ]);
+
+        $loan->approve($admin);
+
+        $this->assertEquals('approved', $loan->status);
+        $this->assertEquals($admin->id, $loan->approved_by);
+    }
+
+    /** @test */
+    public function can_mark_loan_as_rejected()
+    {
+        $admin = User::factory()->make([
+            'is_admin' => true
+        ]); 
+
+        $loan = Loan::factory()->make([
+            'status' => 'pending',
+            'approved_by' => null
+        ]);
+
+        $loan->reject($admin, 'Credit score not good enough.');
+
+        $this->assertEquals('rejected', $loan->status);
+        $this->assertEquals($admin->id, $loan->rejected_by);
+        $this->assertEquals('Credit score not good enough.', $loan->reason_for_rejection);
     }
 }
