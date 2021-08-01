@@ -19,4 +19,9 @@ class LoanPolicy
     {
         return $user->is_admin == true;
     }
+
+    public function repay(User $user, Loan $loan)
+    {
+        return $loan->installments_remaining > 0 && $user->id == $loan->user_id;
+    }
 }

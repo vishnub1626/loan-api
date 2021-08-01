@@ -17,9 +17,11 @@ class LoanResource extends JsonResource
         return [
             'id' => $this->id,
             'amount' => $this->formatted_amount,
+            'weekly_installment_amount' => $this->formatted_weekly_installment,
+            'installments_remaining' => is_null($this->installments_remaining) ? null : (int) $this->installments_remaining,
             'term_in_weeks' => (int) $this->loan_term_in_weeks,
             'status' => $this->status,
-            'interest_rate' => $this->interest_rate,
+            'interest_rate' => is_null($this->interest_rate) ? null : (float) $this->interest_rate,
             'reason_for_rejection' => $this->reason_for_rejection,
         ];
     }

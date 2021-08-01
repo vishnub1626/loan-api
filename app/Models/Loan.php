@@ -21,6 +21,11 @@ class Loan extends Model
         return number_format($this->weekly_installment_amount / 100, 2);
     }
 
+    public function installments()
+    {
+        return $this->hasMany(LoanInstallment::class);
+    }
+
     public function approve(User $user)
     {
         $this->status = 'approved';

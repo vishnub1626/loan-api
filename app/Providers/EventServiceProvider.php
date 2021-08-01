@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Events\LoanApproved;
+use App\Events\LoanClosed;
 use App\Events\LoanRejected;
 use App\Listeners\SendLoanApprovedNotification;
+use App\Listeners\SendLoanClosedNotification;
 use App\Listeners\SendLoanRejectedNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -22,6 +24,10 @@ class EventServiceProvider extends ServiceProvider
 
         LoanRejected::class => [
             SendLoanRejectedNotification::class,
+        ],
+
+        LoanClosed::class => [
+            SendLoanClosedNotification::class,
         ],
     ];
 

@@ -64,4 +64,35 @@ class LoanPolicyTest extends TestCase
 
         $this->assertFalse((new LoanPolicy)->reject($user, $loan));
     }
+
+    /** @test */
+    public function only_borrower_can_repay_loan()
+    {
+        $user = new User;
+        $user->id = 1;
+
+        $anotherUser = new User;
+        $anotherUser->id = 2;
+
+        $loan = Loan::factory()->make([
+            'user_id' => $user->id,
+            'installments_remaining' => 2,
+        ]); 
+
+        $this->assertTrue((new LoanPolicy)->repay($user, $loan));
+        $this->assertFalse((new LoanPolicy)->repay($anotherUser, $loan));
+    }
+
+    /** @test */
+    public function repay_is_possible_only_if_installments_are_remaining()
+    {
+        $user = new User;
+
+        $loan = Loan::factory()->make([
+            'user_id' => $user->id,
+            'installments_remaining' => 0,
+        ]); 
+
+        $this->assertFalse((new LoanPolicy)->repay($user, $loan));
+    }
 }

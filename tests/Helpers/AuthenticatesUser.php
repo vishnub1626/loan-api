@@ -7,9 +7,9 @@ use Laravel\Sanctum\Sanctum;
 
 trait AuthenticatesUser
 {
-    public function login()
+    public function login($user = null)
     {
-        $user = User::factory()->create([
+        $user = $user ?? User::factory()->create([
             'is_admin' => false
         ]);
 

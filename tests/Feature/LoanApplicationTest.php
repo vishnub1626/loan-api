@@ -33,6 +33,8 @@ class LoanApplicationTest extends TestCase
                 'data' => [
                     'id' => 1,
                     'amount' => "10,000.00",
+                    'weekly_installment_amount' => '0.00',
+                    'installments_remaining' => null,
                     'term_in_weeks' => 52,
                     'status' => 'pending',
                     'interest_rate' => null,

@@ -3,11 +3,16 @@
 namespace Tests\Unit;
 
 use App\Models\Loan;
+use App\Models\LoanInstallment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LoanTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function can_return_formatted_loan_amount()
     {
@@ -23,7 +28,7 @@ class LoanTest extends TestCase
     {
         $admin = User::factory()->make([
             'is_admin' => true
-        ]); 
+        ]);
 
         $loan = Loan::factory()->make([
             'status' => 'pending',
@@ -41,7 +46,7 @@ class LoanTest extends TestCase
     {
         $admin = User::factory()->make([
             'is_admin' => true
-        ]); 
+        ]);
 
         $loan = Loan::factory()->make([
             'status' => 'pending',
@@ -63,5 +68,26 @@ class LoanTest extends TestCase
         ]);
 
         $this->assertEquals('100.00', $loan->formatted_weekly_installment);
+    }
+
+    /** @test */
+    public function a_post_has_many_comments()
+    {
+        $loan = Loan::factory()->create([
+            'user_id' => 1
+        ]);
+        LoanInstallment::factory()->count(3)->create([
+            'loan_id' => $loan->id,
+            'amount' => 1200
+        ]);
+
+        $loan = $loan->fresh();
+
+        $this->assertCount(3, $loan->installments);
+        $this->assertInstanceOf(Collection::class, $loan->installments);
+
+        $loan->installments->each(function ($installment) {
+            $this->assertInstanceOf(LoanInstallment::class, $installment);
+        });
     }
 }

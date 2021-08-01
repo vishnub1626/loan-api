@@ -60,6 +60,8 @@ class LoanApprovalTest extends TestCase
             'data' => [
                 'id' => $loan->id,
                 'amount' => $loan->formatted_amount,
+                'weekly_installment_amount' => $loan->formatted_weekly_installment,
+                'installments_remaining' => $loan->installments_remaining,
                 'term_in_weeks' => $loan->loan_term_in_weeks,
                 'status' => 'approved',
                 'interest_rate' => 13.00,
@@ -130,6 +132,8 @@ class LoanApprovalTest extends TestCase
             'data' => [
                 'id' => $loan->id,
                 'amount' => $loan->formatted_amount,
+                'weekly_installment_amount' => $loan->formatted_weekly_installment,
+                'installments_remaining' => $loan->installments_remaining,
                 'term_in_weeks' => $loan->loan_term_in_weeks,
                 'status' => 'rejected',
                 'interest_rate' => null,
