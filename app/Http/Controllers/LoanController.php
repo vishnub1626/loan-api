@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LoanApplicationRequest;
-use App\Http\Resources\LoanResource;
 use App\Models\Loan;
+use Illuminate\Http\Request;
+use App\Http\Resources\LoanResource;
+use App\Http\Requests\LoanApplicationRequest;
 
 class LoanController extends Controller
 {
+    public function index(Request $request)
+    {
+        $loans = Loan::where('user_id', $request->user()->id)->paginate(10);
+
+        return LoanResource::collection($loans);
+    }
+
+    public function find(Loan $loan)
+    {
+        return new LoanResource($loan);
+    }
+
     public function store(LoanApplicationRequest $request)
     {
         $loan = Loan::create([
