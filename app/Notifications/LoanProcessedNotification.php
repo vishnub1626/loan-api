@@ -47,7 +47,7 @@ class LoanProcessedNotification extends Notification
         return (new MailMessage)
             ->subject('Congrats! Your loan is processed.')
             ->greeting('Hello!')
-            ->line("One of your loan applications is processed! Weekly installment is $this->formatted_weekly_installment.")
+            ->line("One of your loan applications is processed! Weekly installment is " . $this->loan->formatted_weekly_installment)
             ->action('View Loan', $url)
             ->line('Thank you for using our service!');
     }
