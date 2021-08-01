@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoanApprovalController;
 use App\Http\Controllers\LoanInstallmentController;
 
@@ -13,3 +14,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/loans/{loan}/installment', [LoanInstallmentController::class, 'store']);
 });
+
+Route::post('/register', [UserController::class, 'store']);
+Route::post('/login', [UserController::class, 'login']);
