@@ -11,7 +11,10 @@ class LoanController extends Controller
 {
     public function index(Request $request)
     {
-        $loans = Loan::where('user_id', $request->user()->id)->paginate(10);
+        $loans = Loan::query()
+            ->where('user_id', $request->user()->id)
+            ->latest()
+            ->paginate(10);
 
         return LoanResource::collection($loans);
     }
